@@ -1,0 +1,6 @@
+---
+- name: Install systemd-swap
+  pacman:
+    name: systemd-swap
+    update_cache: true
+    state: present

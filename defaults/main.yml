@@ -1,0 +1,47 @@
+---
+#
+# Service
+#
+systemd_swap_service_enabled: true
+systemd_swap_service_state: started
+
+
+#
+# Installation
+#
+# install options for non-Archlinux systems
+systemd_swap_force_reinstall: false
+systemd_swap_repository: https://github.com/Nefelim4ag/systemd-swap.git
+systemd_swap_version: latest
+
+
+#
+# Configuration
+#
+# ZRAM
+systemd_swap_zram_enabled: false
+systemd_swap_zram_size: 25%
+systemd_swap_zram_streams: "{{ ansible_processor_cores }}"
+#  any compressor enabled in the kernel cryptoraphic API
+systemd_swap_zram_alg: lzo
+systemd_swap_zram_prio: 32767
+
+# ZSWAP
+systemd_swap_zswap_enabled: false
+#  any compressor enabled in the kernel cryptoraphic API
+systemd_swap_zswap_compressor: lzo
+systemd_swap_zswap_max_pool_percent: 25
+systemd_swap_zswap_zpool: zbud
+
+# SWAPFC
+systemd_swap_swapfc_enabled: false
+systemd_swap_swapfc_force_use_loop: false
+systemd_swap_swapfc_frequency: 1s
+systemd_swap_swapfc_chunk_size: 512M
+systemd_swap_swapfc_max_count: 8
+systemd_swap_swapfc_free_swap_perc: 15
+systemd_swap_swapfc_nocow: true
+systemd_swap_swapfc_directio: true
+systemd_swap_swapfc_force_preallocated: false
+systemd_swap_swapd_auto_swapon: true
+systemd_swap_swapd_prio: 1024

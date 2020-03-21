@@ -1,0 +1,19 @@
+---
+- name: Configure systemd-swap
+  tags: systemd-swap
+  template:
+    src: systemd-swap.conf.j2
+    dest: /etc/systemd/swap.conf
+    owner: root
+    group: root
+    mode: "0644"
+    lstrip_blocks: true
+  notify:
+    - restart systemd-swap
+
+- name: Manage systemd-swap service
+  tags: systemd-swap
+  service:
+    name: systemd-swap
+    state: "{{ systemd_swap_service_state }}"
+    enabled: "{{ systemd_swap_service_enabled }}"

@@ -1,0 +1,50 @@
+{{ ansible_managed | comment }}
+{% macro format_bool(value) %}{{ value | ternary('1', '0') }}{% endmacro %}
+
+################################################################################
+# Zswap
+#
+# Kernel >= 3.11
+# Zswap create compress cache between swap and memory for reduce IO
+# https://www.kernel.org/doc/Documentation/vm/zswap.txt
+
+zswap_enabled={{ format_bool(systemd_swap_zswap_enabled) }}
+zswap_compressor={{ systemd_swap_zswap_compressor }}      # lzo lz4
+zswap_max_pool_percent={{ systemd_swap_zswap_max_pool_percent }} # 1-99
+zswap_zpool={{ systemd_swap_zswap_zpool }}          # zbud z3fold
+
+################################################################################
+# ZRam
+#
+# Kernel >= 3.15
+# Zram compression streams count for additional information see:
+# https://www.kernel.org/doc/Documentation/blockdev/zram.txt
+
+zram_enabled={{ format_bool(systemd_swap_zram_enabled) }}
+zram_size={{ systemd_swap_zram_size | size(ansible_memtotal_mb) }} # This is 1/4 of ram size by default.
+zram_streams={{ systemd_swap_zram_streams }}
+zram_alg={{ systemd_swap_zram_alg }}                     # lzo lz4 deflate lz4hc 842 - for Linux 4.8.4
+zram_prio={{ systemd_swap_zram_prio }}                  # 1 - 32767
+
+################################################################################
+# Swap File Chunked
+# Allocate swap files dynamically
+# For btrfs fallback to swapfile + loop will be used
+# ex. Min swap size 512M, Max 8*512M
+swapfc_enabled={{ format_bool(systemd_swap_swapfc_enabled) }}
+swapfc_force_use_loop={{ format_bool(systemd_swap_swapfc_force_use_loop) }}     # Force usage of swapfile + loop
+swapfc_frequency={{ systemd_swap_swapfc_frequency }}         # How often check free swap space
+swapfc_chunk_size={{ systemd_swap_swapfc_chunk_size | size(ansible_memtotal_mb) }}      # Allocate size of swap chunk
+swapfc_max_count={{ systemd_swap_swapfc_max_count }}          # note: 32 is a kernel maximum
+swapfc_free_swap_perc={{ systemd_swap_swapfc_free_swap_perc }}    # Add new chunk if free < 15%
+                            # Remove chunk if free > 15+40% & chunk count > 2
+# Only for swapfile + loop
+swapfc_nocow={{ systemd_swap_swapfc_nocow }}              # Disable CoW on swapfile
+swapfc_directio={{ systemd_swap_swapfc_directio }}           # Use directio for loop dev
+swapfc_force_preallocated={{ systemd_swap_swapfc_force_preallocated }} # Will preallocate created files
+
+################################################################################
+# Swap devices
+# Find and auto swapon all available swap devices
+swapd_auto_swapon={{ systemd_swap_swapd_auto_swapon }}
+swapd_prio={{ systemd_swap_swapd_prio }}

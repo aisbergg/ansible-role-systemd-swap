@@ -1,0 +1,10 @@
+---
+- name: Include install tasks
+  tags: systemd-swap
+  include_tasks: "{{ item }}"
+  with_first_found:
+    - "install-{{ ansible_os_family }}.yml"
+    - "install-generic.yml"
+
+- import_tasks: configure.yml
+  tags: systemd-swap
