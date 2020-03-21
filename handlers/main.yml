@@ -1,0 +1,5 @@
+---
+- name: restart systemd-swap
+  systemd:
+    name: systemd-swap
+    state: restarted

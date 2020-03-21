@@ -1,0 +1,32 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: Aisbergg
+  description: Install the systemd-swap script and create ZRAM and ZSWAP devices on Linux systems.
+  company: none
+  issue_tracker_url: https://github.com/Aisbergg/ansible-role-systemd-swap/issues
+  license: MIT
+  min_ansible_version: 2.6
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Fedora
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Archlinux
+      versions:
+        - all
+
+  galaxy_tags:
+    - zram
+    - zswap
