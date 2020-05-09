@@ -1,6 +1,6 @@
 # Ansible Role: `aisbergg.systemd-swap`
 
-This Ansible role installs and configures the [`systemd-swap`](https://github.com/aurora/systemd-swap) script on Linux systems, which can be used to create ZRAM and ZSWAP devices.
+This Ansible role installs and configures the [`systemd-swap`](https://github.com/Nefelim4ag/systemd-swap) script on Linux systems, which can be used to create ZRAM and ZSWAP devices.
 
 You can use `swapon -s` to list currently present SWAP devices.
 
